@@ -23,24 +23,28 @@ jobs:
       with:
         terraform_version: 1.5.0
 
-    
+    - name: Set up Azure Credentials
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
    
     - name: Terraform Init
       run: terraform init
-      working-directory: ./Terraform-Loganalytics
+      working-directory: ./Terraform-RBAC
 
    
     - name: Terraform Validate
       run: terraform validate
-      working-directory: ./Terraform-Loganalytics
+      working-directory: ./Terraform-RBAC
 
  
     - name: Terraform Plan
       id: plan
       run: terraform plan -out=tfplan
-      working-directory: ./Terraform-Loganalytics
+      working-directory: ./Terraform-RBAC
 
    
     - name: Terraform Apply
       run: terraform apply -auto-approve tfplan
-      working-directory: ./Terraform-Loganalytics
+      working-directory: ./Terraform-RBAC
